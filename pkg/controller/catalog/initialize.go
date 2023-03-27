@@ -66,12 +66,12 @@ func (action *initializeAction) Handle(ctx context.Context, catalog *v1.CamelCat
 	}
 
 	// Make basic options for building image in the registry
-	options, err := makeSpectrumOptions(ctx, action.client, platform.Namespace, platform.Status.Build.Registry)
+	options, err := makeSpectrumOptions(ctx, action.client, platform.Namespace, platform.Status.Pipeline.Registry)
 	if err != nil {
 		return catalog, err
 	}
 
-	return initialize(options, platform.Spec.Build.Registry.Address, catalog)
+	return initialize(options, platform.Spec.Pipeline.Registry.Address, catalog)
 }
 
 func initialize(options spectrum.Options, registryAddress string, catalog *v1.CamelCatalog) (*v1.CamelCatalog, error) {

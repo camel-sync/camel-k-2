@@ -128,7 +128,7 @@ func createBuilderTestEnv(cluster v1.IntegrationPlatformCluster, strategy v1.Int
 		Platform: &v1.IntegrationPlatform{
 			Spec: v1.IntegrationPlatformSpec{
 				Cluster: cluster,
-				Build: v1.IntegrationPlatformBuildSpec{
+				Pipeline: v1.IntegrationPlatformPipelineSpec{
 					PublishStrategy:        strategy,
 					Registry:               v1.RegistrySpec{Address: "registry"},
 					RuntimeVersion:         defaults.DefaultRuntimeVersion,

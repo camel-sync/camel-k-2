@@ -13,7 +13,7 @@ type IntegrationPlatform struct {
 type IntegrationPlatformSpec struct {
 	Cluster       IntegrationPlatformCluster       // <3>
 	Profile       TraitProfile                     // <4>
-	Build         IntegrationPlatformBuildSpec     // <5>
+	Build         IntegrationPlatformPipelineSpec     // <5>
 	Traits        map[string]TraitSpec             // <6>
 	Configuration []ConfigurationSpec              // <6>
 	Kamelet       []IntegrationPlatformKameletSpec // <7>

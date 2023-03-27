@@ -24,9 +24,9 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// IntegrationPlatformBuildSpecApplyConfiguration represents an declarative configuration of the IntegrationPlatformBuildSpec type for use
+// IntegrationPlatformPipelineSpecApplyConfiguration represents an declarative configuration of the IntegrationPlatformPipelineSpec type for use
 // with apply.
-type IntegrationPlatformBuildSpecApplyConfiguration struct {
+type IntegrationPlatformPipelineSpecApplyConfiguration struct {
 	BuildStrategy          *v1.BuildStrategy                           `json:"buildStrategy,omitempty"`
 	PublishStrategy        *v1.IntegrationPlatformBuildPublishStrategy `json:"publishStrategy,omitempty"`
 	RuntimeVersion         *string                                     `json:"runtimeVersion,omitempty"`
@@ -38,16 +38,16 @@ type IntegrationPlatformBuildSpecApplyConfiguration struct {
 	PublishStrategyOptions map[string]string                           `json:"PublishStrategyOptions,omitempty"`
 }
 
-// IntegrationPlatformBuildSpecApplyConfiguration constructs an declarative configuration of the IntegrationPlatformBuildSpec type for use with
+// IntegrationPlatformPipelineSpecApplyConfiguration constructs an declarative configuration of the IntegrationPlatformPipelineSpec type for use with
 // apply.
-func IntegrationPlatformBuildSpec() *IntegrationPlatformBuildSpecApplyConfiguration {
-	return &IntegrationPlatformBuildSpecApplyConfiguration{}
+func IntegrationPlatformPipelineSpec() *IntegrationPlatformPipelineSpecApplyConfiguration {
+	return &IntegrationPlatformPipelineSpecApplyConfiguration{}
 }
 
 // WithBuildStrategy sets the BuildStrategy field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the BuildStrategy field is set to the value of the last call.
-func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithBuildStrategy(value v1.BuildStrategy) *IntegrationPlatformBuildSpecApplyConfiguration {
+func (b *IntegrationPlatformPipelineSpecApplyConfiguration) WithBuildStrategy(value v1.BuildStrategy) *IntegrationPlatformPipelineSpecApplyConfiguration {
 	b.BuildStrategy = &value
 	return b
 }
@@ -55,7 +55,7 @@ func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithBuildStrategy(value
 // WithPublishStrategy sets the PublishStrategy field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the PublishStrategy field is set to the value of the last call.
-func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithPublishStrategy(value v1.IntegrationPlatformBuildPublishStrategy) *IntegrationPlatformBuildSpecApplyConfiguration {
+func (b *IntegrationPlatformPipelineSpecApplyConfiguration) WithPublishStrategy(value v1.IntegrationPlatformBuildPublishStrategy) *IntegrationPlatformPipelineSpecApplyConfiguration {
 	b.PublishStrategy = &value
 	return b
 }
@@ -63,7 +63,7 @@ func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithPublishStrategy(val
 // WithRuntimeVersion sets the RuntimeVersion field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the RuntimeVersion field is set to the value of the last call.
-func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithRuntimeVersion(value string) *IntegrationPlatformBuildSpecApplyConfiguration {
+func (b *IntegrationPlatformPipelineSpecApplyConfiguration) WithRuntimeVersion(value string) *IntegrationPlatformPipelineSpecApplyConfiguration {
 	b.RuntimeVersion = &value
 	return b
 }
@@ -71,7 +71,7 @@ func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithRuntimeVersion(valu
 // WithRuntimeProvider sets the RuntimeProvider field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the RuntimeProvider field is set to the value of the last call.
-func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithRuntimeProvider(value v1.RuntimeProvider) *IntegrationPlatformBuildSpecApplyConfiguration {
+func (b *IntegrationPlatformPipelineSpecApplyConfiguration) WithRuntimeProvider(value v1.RuntimeProvider) *IntegrationPlatformPipelineSpecApplyConfiguration {
 	b.RuntimeProvider = &value
 	return b
 }
@@ -79,7 +79,7 @@ func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithRuntimeProvider(val
 // WithBaseImage sets the BaseImage field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the BaseImage field is set to the value of the last call.
-func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithBaseImage(value string) *IntegrationPlatformBuildSpecApplyConfiguration {
+func (b *IntegrationPlatformPipelineSpecApplyConfiguration) WithBaseImage(value string) *IntegrationPlatformPipelineSpecApplyConfiguration {
 	b.BaseImage = &value
 	return b
 }
@@ -87,7 +87,7 @@ func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithBaseImage(value str
 // WithRegistry sets the Registry field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the Registry field is set to the value of the last call.
-func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithRegistry(value *RegistrySpecApplyConfiguration) *IntegrationPlatformBuildSpecApplyConfiguration {
+func (b *IntegrationPlatformPipelineSpecApplyConfiguration) WithRegistry(value *RegistrySpecApplyConfiguration) *IntegrationPlatformPipelineSpecApplyConfiguration {
 	b.Registry = value
 	return b
 }
@@ -95,7 +95,7 @@ func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithRegistry(value *Reg
 // WithTimeout sets the Timeout field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the Timeout field is set to the value of the last call.
-func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithTimeout(value metav1.Duration) *IntegrationPlatformBuildSpecApplyConfiguration {
+func (b *IntegrationPlatformPipelineSpecApplyConfiguration) WithTimeout(value metav1.Duration) *IntegrationPlatformPipelineSpecApplyConfiguration {
 	b.Timeout = &value
 	return b
 }
@@ -103,7 +103,7 @@ func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithTimeout(value metav
 // WithMaven sets the Maven field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the Maven field is set to the value of the last call.
-func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithMaven(value *MavenSpecApplyConfiguration) *IntegrationPlatformBuildSpecApplyConfiguration {
+func (b *IntegrationPlatformPipelineSpecApplyConfiguration) WithMaven(value *MavenSpecApplyConfiguration) *IntegrationPlatformPipelineSpecApplyConfiguration {
 	b.Maven = value
 	return b
 }
@@ -112,7 +112,7 @@ func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithMaven(value *MavenS
 // and returns the receiver, so that objects can be build by chaining "With" function invocations.
 // If called multiple times, the entries provided by each call will be put on the PublishStrategyOptions field,
 // overwriting an existing map entries in PublishStrategyOptions field with the same key.
-func (b *IntegrationPlatformBuildSpecApplyConfiguration) WithPublishStrategyOptions(entries map[string]string) *IntegrationPlatformBuildSpecApplyConfiguration {
+func (b *IntegrationPlatformPipelineSpecApplyConfiguration) WithPublishStrategyOptions(entries map[string]string) *IntegrationPlatformPipelineSpecApplyConfiguration {
 	if b.PublishStrategyOptions == nil && len(entries) > 0 {
 		b.PublishStrategyOptions = make(map[string]string, len(entries))
 	}

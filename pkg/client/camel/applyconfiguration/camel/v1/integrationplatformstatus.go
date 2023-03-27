@@ -56,11 +56,11 @@ func (b *IntegrationPlatformStatusApplyConfiguration) WithProfile(value camelv1.
 	return b
 }
 
-// WithBuild sets the Build field in the declarative configuration to the given value
+// WithPipeline sets the Pipeline field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
-// If called multiple times, the Build field is set to the value of the last call.
-func (b *IntegrationPlatformStatusApplyConfiguration) WithBuild(value *IntegrationPlatformBuildSpecApplyConfiguration) *IntegrationPlatformStatusApplyConfiguration {
-	b.Build = value
+// If called multiple times, the Pipeline field is set to the value of the last call.
+func (b *IntegrationPlatformStatusApplyConfiguration) WithPipeline(value *IntegrationPlatformPipelineSpecApplyConfiguration) *IntegrationPlatformStatusApplyConfiguration {
+	b.Pipeline = value
 	return b
 }
 

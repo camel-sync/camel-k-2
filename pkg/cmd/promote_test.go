@@ -56,11 +56,11 @@ func addTestPromoteCmd(options RootCmdOptions, rootCmd *cobra.Command) *promoteC
 func TestIntegrationNotCompatible(t *testing.T) {
 	srcPlatform := v1.NewIntegrationPlatform("default", platform.DefaultPlatformName)
 	srcPlatform.Status.Version = defaults.Version
-	srcPlatform.Status.Build.RuntimeVersion = defaults.DefaultRuntimeVersion
+	srcPlatform.Status.Pipeline.RuntimeVersion = defaults.DefaultRuntimeVersion
 	srcPlatform.Status.Phase = v1.IntegrationPlatformPhaseReady
 	dstPlatform := v1.NewIntegrationPlatform("prod-namespace", platform.DefaultPlatformName)
 	dstPlatform.Status.Version = "0.0.1"
-	dstPlatform.Status.Build.RuntimeVersion = "0.0.1"
+	dstPlatform.Status.Pipeline.RuntimeVersion = "0.0.1"
 	dstPlatform.Status.Phase = v1.IntegrationPlatformPhaseReady
 	defaultIntegration := nominalIntegration("my-it-test")
 
@@ -77,11 +77,11 @@ func TestIntegrationNotCompatible(t *testing.T) {
 func TestIntegrationDryRun(t *testing.T) {
 	srcPlatform := v1.NewIntegrationPlatform("default", platform.DefaultPlatformName)
 	srcPlatform.Status.Version = defaults.Version
-	srcPlatform.Status.Build.RuntimeVersion = defaults.DefaultRuntimeVersion
+	srcPlatform.Status.Pipeline.RuntimeVersion = defaults.DefaultRuntimeVersion
 	srcPlatform.Status.Phase = v1.IntegrationPlatformPhaseReady
 	dstPlatform := v1.NewIntegrationPlatform("prod-namespace", platform.DefaultPlatformName)
 	dstPlatform.Status.Version = defaults.Version
-	dstPlatform.Status.Build.RuntimeVersion = defaults.DefaultRuntimeVersion
+	dstPlatform.Status.Pipeline.RuntimeVersion = defaults.DefaultRuntimeVersion
 	dstPlatform.Status.Phase = v1.IntegrationPlatformPhaseReady
 	defaultIntegration := nominalIntegration("my-it-test")
 
@@ -113,11 +113,11 @@ func nominalIntegration(name string) v1.Integration {
 func TestKameletBindingDryRun(t *testing.T) {
 	srcPlatform := v1.NewIntegrationPlatform("default", platform.DefaultPlatformName)
 	srcPlatform.Status.Version = defaults.Version
-	srcPlatform.Status.Build.RuntimeVersion = defaults.DefaultRuntimeVersion
+	srcPlatform.Status.Pipeline.RuntimeVersion = defaults.DefaultRuntimeVersion
 	srcPlatform.Status.Phase = v1.IntegrationPlatformPhaseReady
 	dstPlatform := v1.NewIntegrationPlatform("prod-namespace", platform.DefaultPlatformName)
 	dstPlatform.Status.Version = defaults.Version
-	dstPlatform.Status.Build.RuntimeVersion = defaults.DefaultRuntimeVersion
+	dstPlatform.Status.Pipeline.RuntimeVersion = defaults.DefaultRuntimeVersion
 	dstPlatform.Status.Phase = v1.IntegrationPlatformPhaseReady
 	defaultKB := nominalKameletBinding("my-kb-test")
 	defaultIntegration := nominalIntegration("my-kb-test")

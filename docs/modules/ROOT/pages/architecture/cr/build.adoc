@@ -6,11 +6,11 @@ A *Build* resource, describes the process of assembling a container image that c
 [source,go]
 ----
 type Build struct {
-	Spec   BuildSpec    // <1>
+	Spec   PipelineSpec    // <1>
 	Status BuildStatus  // <2>
 }
 
-type BuildSpec struct {
+type PipelineSpec struct {
 	Tasks []Task        // <3>
 }
 ----

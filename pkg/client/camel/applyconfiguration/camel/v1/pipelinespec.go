@@ -24,9 +24,9 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// BuildSpecApplyConfiguration represents an declarative configuration of the BuildSpec type for use
+// PipelineSpecApplyConfiguration represents an declarative configuration of the PipelineSpec type for use
 // with apply.
-type BuildSpecApplyConfiguration struct {
+type PipelineSpecApplyConfiguration struct {
 	Tasks               []TaskApplyConfiguration `json:"tasks,omitempty"`
 	Strategy            *camelv1.BuildStrategy   `json:"strategy,omitempty"`
 	ToolImage           *string                  `json:"toolImage,omitempty"`
@@ -34,16 +34,16 @@ type BuildSpecApplyConfiguration struct {
 	Timeout             *metav1.Duration         `json:"timeout,omitempty"`
 }
 
-// BuildSpecApplyConfiguration constructs an declarative configuration of the BuildSpec type for use with
+// PipelineSpecApplyConfiguration constructs an declarative configuration of the PipelineSpec type for use with
 // apply.
-func BuildSpec() *BuildSpecApplyConfiguration {
-	return &BuildSpecApplyConfiguration{}
+func PipelineSpec() *PipelineSpecApplyConfiguration {
+	return &PipelineSpecApplyConfiguration{}
 }
 
 // WithTasks adds the given value to the Tasks field in the declarative configuration
 // and returns the receiver, so that objects can be build by chaining "With" function invocations.
 // If called multiple times, values provided by each call will be appended to the Tasks field.
-func (b *BuildSpecApplyConfiguration) WithTasks(values ...*TaskApplyConfiguration) *BuildSpecApplyConfiguration {
+func (b *PipelineSpecApplyConfiguration) WithTasks(values ...*TaskApplyConfiguration) *PipelineSpecApplyConfiguration {
 	for i := range values {
 		if values[i] == nil {
 			panic("nil value passed to WithTasks")
@@ -56,7 +56,7 @@ func (b *BuildSpecApplyConfiguration) WithTasks(values ...*TaskApplyConfiguratio
 // WithStrategy sets the Strategy field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the Strategy field is set to the value of the last call.
-func (b *BuildSpecApplyConfiguration) WithStrategy(value camelv1.BuildStrategy) *BuildSpecApplyConfiguration {
+func (b *PipelineSpecApplyConfiguration) WithStrategy(value camelv1.BuildStrategy) *PipelineSpecApplyConfiguration {
 	b.Strategy = &value
 	return b
 }
@@ -64,7 +64,7 @@ func (b *BuildSpecApplyConfiguration) WithStrategy(value camelv1.BuildStrategy) 
 // WithToolImage sets the ToolImage field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the ToolImage field is set to the value of the last call.
-func (b *BuildSpecApplyConfiguration) WithToolImage(value string) *BuildSpecApplyConfiguration {
+func (b *PipelineSpecApplyConfiguration) WithToolImage(value string) *PipelineSpecApplyConfiguration {
 	b.ToolImage = &value
 	return b
 }
@@ -72,7 +72,7 @@ func (b *BuildSpecApplyConfiguration) WithToolImage(value string) *BuildSpecAppl
 // WithBuilderPodNamespace sets the BuilderPodNamespace field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the BuilderPodNamespace field is set to the value of the last call.
-func (b *BuildSpecApplyConfiguration) WithBuilderPodNamespace(value string) *BuildSpecApplyConfiguration {
+func (b *PipelineSpecApplyConfiguration) WithBuilderPodNamespace(value string) *PipelineSpecApplyConfiguration {
 	b.BuilderPodNamespace = &value
 	return b
 }
@@ -80,7 +80,7 @@ func (b *BuildSpecApplyConfiguration) WithBuilderPodNamespace(value string) *Bui
 // WithTimeout sets the Timeout field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the Timeout field is set to the value of the last call.
-func (b *BuildSpecApplyConfiguration) WithTimeout(value metav1.Duration) *BuildSpecApplyConfiguration {
+func (b *PipelineSpecApplyConfiguration) WithTimeout(value metav1.Duration) *PipelineSpecApplyConfiguration {
 	b.Timeout = &value
 	return b
 }

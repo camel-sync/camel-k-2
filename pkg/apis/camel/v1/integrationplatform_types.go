@@ -33,7 +33,7 @@ type IntegrationPlatformSpec struct {
 	// It usually relates the Cluster with the optional definition of special profiles (ie, Knative)
 	Profile TraitProfile `json:"profile,omitempty"`
 	// specify how to build the Integration/IntegrationKits
-	Build IntegrationPlatformBuildSpec `json:"build,omitempty"`
+	Pipeline IntegrationPlatformPipelineSpec `json:"pipeline,omitempty"`
 	// list of traits to be executed for all the Integration/IntegrationKits built from this IntegrationPlatform
 	Traits Traits `json:"traits,omitempty"`
 	// Deprecated:
@@ -103,10 +103,10 @@ const (
 // AllIntegrationPlatformClusters --
 var AllIntegrationPlatformClusters = []IntegrationPlatformCluster{IntegrationPlatformClusterOpenShift, IntegrationPlatformClusterKubernetes}
 
-// IntegrationPlatformBuildSpec contains platform related build information.
+// IntegrationPlatformPipelineSpec contains platform related build information.
 // This configuration can be used to tune the behavior of the Integration/IntegrationKit image builds.
 // You can define the build strategy, the image registry to use and the Maven configuration to adopt.
-type IntegrationPlatformBuildSpec struct {
+type IntegrationPlatformPipelineSpec struct {
 	// the strategy to adopt for building an Integration base image
 	BuildStrategy BuildStrategy `json:"buildStrategy,omitempty"`
 	// the strategy to adopt for publishing an Integration base image

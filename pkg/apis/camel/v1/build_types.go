@@ -25,9 +25,9 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 // Important: Run "make generate-deepcopy" to regenerate code after modifying this file
 
-// BuildSpec defines the Build operation to be executed
-type BuildSpec struct {
-	// The sequence of Build tasks to be performed as part of the Build execution.
+// PipelineSpec defines the Pipeline operation to be executed
+type PipelineSpec struct {
+	// The sequence of Pipeline tasks to be performed as part of the Pipeline execution.
 	Tasks []Task `json:"tasks,omitempty"`
 	// The strategy that should be used to perform the Build.
 	Strategy BuildStrategy `json:"strategy,omitempty"`
@@ -226,8 +226,8 @@ type Build struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   BuildSpec   `json:"spec,omitempty"`
-	Status BuildStatus `json:"status,omitempty"`
+	Spec   PipelineSpec `json:"spec,omitempty"`
+	Status BuildStatus  `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -99,8 +99,8 @@ func (action *buildAction) handleBuildSubmitted(ctx context.Context, kit *v1.Int
 			annotations[v1.OperatorIDAnnotation] = operatorID
 		}
 
-		timeout := env.Platform.Status.Build.GetTimeout()
-		if layout := labels[v1.IntegrationKitLayoutLabel]; env.Platform.Spec.Build.Timeout == nil && layout == v1.IntegrationKitLayoutNative {
+		timeout := env.Platform.Status.Pipeline.GetTimeout()
+		if layout := labels[v1.IntegrationKitLayoutLabel]; env.Platform.Spec.Pipeline.Timeout == nil && layout == v1.IntegrationKitLayoutNative {
 			// Increase the timeout to a sensible default
 			timeout = metav1.Duration{
 				Duration: 10 * time.Minute,
@@ -109,7 +109,7 @@ func (action *buildAction) handleBuildSubmitted(ctx context.Context, kit *v1.Int
 
 		// It has to be the same namespace as the operator as they must share a PVC
 		builderPodNamespace := platform.GetOperatorNamespace()
-		buildStrategy := env.Platform.Status.Build.BuildStrategy
+		buildStrategy := env.Platform.Status.Pipeline.BuildStrategy
 		if env.BuildStrategy != "" {
 			buildStrategy = env.BuildStrategy
 		}
@@ -140,7 +140,7 @@ func (action *buildAction) handleBuildSubmitted(ctx context.Context, kit *v1.Int
 				Labels:      labels,
 				Annotations: annotations,
 			},
-			Spec: v1.BuildSpec{
+			Spec: v1.PipelineSpec{
 				Strategy:            buildStrategy,
 				ToolImage:           env.CamelCatalog.Image,
 				BuilderPodNamespace: builderPodNamespace,

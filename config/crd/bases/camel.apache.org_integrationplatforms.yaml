@@ -67,7 +67,51 @@ spec:
           spec:
             description: IntegrationPlatformSpec defines the desired state of IntegrationPlatform
             properties:
-              build:
+              cluster:
+                description: what kind of cluster you're running (ie, plain Kubernetes
+                  or OpenShift)
+                type: string
+              configuration:
+                description: 'Deprecated: Use camel trait (camel.properties) to manage
+                  properties Use mount trait (mount.configs) to manage configs Use
+                  mount trait (mount.resources) to manage resources Use mount trait
+                  (mount.volumes) to manage volumes list of configuration properties
+                  to be attached to all the Integration/IntegrationKits built from
+                  this IntegrationPlatform'
+                items:
+                  description: ConfigurationSpec represents a generic configuration
+                    specification
+                  properties:
+                    type:
+                      description: 'represents the type of configuration, ie: property,
+                        configmap, secret, ...'
+                      type: string
+                    value:
+                      description: the value to assign to the configuration (syntax
+                        may vary depending on the `Type`)
+                      type: string
+                  required:
+                  - type
+                  - value
+                  type: object
+                type: array
+              kamelet:
+                description: configuration to be executed to all Kamelets controlled
+                  by this IntegrationPlatform
+                properties:
+                  repositories:
+                    description: remote repository used to retrieve Kamelet catalog
+                    items:
+                      description: IntegrationPlatformKameletRepositorySpec defines
+                        the location of the Kamelet catalog to use
+                      properties:
+                        uri:
+                          description: the remote repository in the format github:ORG/REPO/PATH_TO_KAMELETS_FOLDER
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              pipeline:
                 description: specify how to build the Integration/IntegrationKits
                 properties:
                   PublishStrategyOptions:
@@ -274,50 +318,6 @@ spec:
                   timeout:
                     description: how much time to wait before time out the build process
                     type: string
-                type: object
-              cluster:
-                description: what kind of cluster you're running (ie, plain Kubernetes
-                  or OpenShift)
-                type: string
-              configuration:
-                description: 'Deprecated: Use camel trait (camel.properties) to manage
-                  properties Use mount trait (mount.configs) to manage configs Use
-                  mount trait (mount.resources) to manage resources Use mount trait
-                  (mount.volumes) to manage volumes list of configuration properties
-                  to be attached to all the Integration/IntegrationKits built from
-                  this IntegrationPlatform'
-                items:
-                  description: ConfigurationSpec represents a generic configuration
-                    specification
-                  properties:
-                    type:
-                      description: 'represents the type of configuration, ie: property,
-                        configmap, secret, ...'
-                      type: string
-                    value:
-                      description: the value to assign to the configuration (syntax
-                        may vary depending on the `Type`)
-                      type: string
-                  required:
-                  - type
-                  - value
-                  type: object
-                type: array
-              kamelet:
-                description: configuration to be executed to all Kamelets controlled
-                  by this IntegrationPlatform
-                properties:
-                  repositories:
-                    description: remote repository used to retrieve Kamelet catalog
-                    items:
-                      description: IntegrationPlatformKameletRepositorySpec defines
-                        the location of the Kamelet catalog to use
-                      properties:
-                        uri:
-                          description: the remote repository in the format github:ORG/REPO/PATH_TO_KAMELETS_FOLDER
-                          type: string
-                      type: object
-                    type: array
                 type: object
               profile:
                 description: the profile you wish to use. It will apply certain traits
@@ -1613,7 +1613,99 @@ spec:
           status:
             description: IntegrationPlatformStatus defines the observed state of IntegrationPlatform
             properties:
-              build:
+              cluster:
+                description: what kind of cluster you're running (ie, plain Kubernetes
+                  or OpenShift)
+                type: string
+              conditions:
+                description: which are the conditions met (particularly useful when
+                  in ERROR phase)
+                items:
+                  description: IntegrationPlatformCondition describes the state of
+                    a resource at a certain point.
+                  properties:
+                    lastTransitionTime:
+                      description: Last time the condition transitioned from one status
+                        to another.
+                      format: date-time
+                      type: string
+                    lastUpdateTime:
+                      description: The last time this condition was updated.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A human-readable message indicating details about
+                        the transition.
+                      type: string
+                    reason:
+                      description: The reason for the condition's last transition.
+                      type: string
+                    status:
+                      description: Status of the condition, one of True, False, Unknown.
+                      type: string
+                    type:
+                      description: Type of integration condition.
+                      type: string
+                  required:
+                  - status
+                  - type
+                  type: object
+                type: array
+              configuration:
+                description: 'Deprecated: Use camel trait (camel.properties) to manage
+                  properties Use mount trait (mount.configs) to manage configs Use
+                  mount trait (mount.resources) to manage resources Use mount trait
+                  (mount.volumes) to manage volumes list of configuration properties
+                  to be attached to all the Integration/IntegrationKits built from
+                  this IntegrationPlatform'
+                items:
+                  description: ConfigurationSpec represents a generic configuration
+                    specification
+                  properties:
+                    type:
+                      description: 'represents the type of configuration, ie: property,
+                        configmap, secret, ...'
+                      type: string
+                    value:
+                      description: the value to assign to the configuration (syntax
+                        may vary depending on the `Type`)
+                      type: string
+                  required:
+                  - type
+                  - value
+                  type: object
+                type: array
+              info:
+                additionalProperties:
+                  type: string
+                description: generic information related to the build of Camel K operator
+                  software
+                type: object
+              kamelet:
+                description: configuration to be executed to all Kamelets controlled
+                  by this IntegrationPlatform
+                properties:
+                  repositories:
+                    description: remote repository used to retrieve Kamelet catalog
+                    items:
+                      description: IntegrationPlatformKameletRepositorySpec defines
+                        the location of the Kamelet catalog to use
+                      properties:
+                        uri:
+                          description: the remote repository in the format github:ORG/REPO/PATH_TO_KAMELETS_FOLDER
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              observedGeneration:
+                description: ObservedGeneration is the most recent generation observed
+                  for this IntegrationPlatform.
+                format: int64
+                type: integer
+              phase:
+                description: defines in what phase the IntegrationPlatform is found
+                type: string
+              pipeline:
                 description: specify how to build the Integration/IntegrationKits
                 properties:
                   PublishStrategyOptions:
@@ -1821,98 +1913,6 @@ spec:
                     description: how much time to wait before time out the build process
                     type: string
                 type: object
-              cluster:
-                description: what kind of cluster you're running (ie, plain Kubernetes
-                  or OpenShift)
-                type: string
-              conditions:
-                description: which are the conditions met (particularly useful when
-                  in ERROR phase)
-                items:
-                  description: IntegrationPlatformCondition describes the state of
-                    a resource at a certain point.
-                  properties:
-                    lastTransitionTime:
-                      description: Last time the condition transitioned from one status
-                        to another.
-                      format: date-time
-                      type: string
-                    lastUpdateTime:
-                      description: The last time this condition was updated.
-                      format: date-time
-                      type: string
-                    message:
-                      description: A human-readable message indicating details about
-                        the transition.
-                      type: string
-                    reason:
-                      description: The reason for the condition's last transition.
-                      type: string
-                    status:
-                      description: Status of the condition, one of True, False, Unknown.
-                      type: string
-                    type:
-                      description: Type of integration condition.
-                      type: string
-                  required:
-                  - status
-                  - type
-                  type: object
-                type: array
-              configuration:
-                description: 'Deprecated: Use camel trait (camel.properties) to manage
-                  properties Use mount trait (mount.configs) to manage configs Use
-                  mount trait (mount.resources) to manage resources Use mount trait
-                  (mount.volumes) to manage volumes list of configuration properties
-                  to be attached to all the Integration/IntegrationKits built from
-                  this IntegrationPlatform'
-                items:
-                  description: ConfigurationSpec represents a generic configuration
-                    specification
-                  properties:
-                    type:
-                      description: 'represents the type of configuration, ie: property,
-                        configmap, secret, ...'
-                      type: string
-                    value:
-                      description: the value to assign to the configuration (syntax
-                        may vary depending on the `Type`)
-                      type: string
-                  required:
-                  - type
-                  - value
-                  type: object
-                type: array
-              info:
-                additionalProperties:
-                  type: string
-                description: generic information related to the build of Camel K operator
-                  software
-                type: object
-              kamelet:
-                description: configuration to be executed to all Kamelets controlled
-                  by this IntegrationPlatform
-                properties:
-                  repositories:
-                    description: remote repository used to retrieve Kamelet catalog
-                    items:
-                      description: IntegrationPlatformKameletRepositorySpec defines
-                        the location of the Kamelet catalog to use
-                      properties:
-                        uri:
-                          description: the remote repository in the format github:ORG/REPO/PATH_TO_KAMELETS_FOLDER
-                          type: string
-                      type: object
-                    type: array
-                type: object
-              observedGeneration:
-                description: ObservedGeneration is the most recent generation observed
-                  for this IntegrationPlatform.
-                format: int64
-                type: integer
-              phase:
-                description: defines in what phase the IntegrationPlatform is found
-                type: string
               profile:
                 description: the profile you wish to use. It will apply certain traits
                   which are required by the specific profile chosen. It usually relates

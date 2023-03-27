@@ -77,7 +77,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: BuildSpec defines the Build operation to be executed
+            description: PipelineSpec defines the Pipeline operation to be executed
             properties:
               operatorNamespace:
                 description: The namespace where to run the builder Pod (must be the
@@ -90,8 +90,8 @@ spec:
                 - pod
                 type: string
               tasks:
-                description: The sequence of Build tasks to be performed as part of
-                  the Build execution.
+                description: The sequence of Pipeline tasks to be performed as part
+                  of the Pipeline execution.
                 items:
                   description: Task represents the abstract task. Only one of the
                     task should be configured to represent the specific task chosen.

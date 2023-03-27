@@ -31,7 +31,7 @@ string
 
 Refer to the Kubernetes API documentation for the fields of the `metadata` field.
 |`spec` +
-*xref:#_camel_apache_org_v1_BuildSpec[BuildSpec]*
+*xref:#_camel_apache_org_v1_PipelineSpec[PipelineSpec]*
 |
 
 
@@ -401,61 +401,6 @@ BuildConditionType --
 BuildPhase --
 
 
-[#_camel_apache_org_v1_BuildSpec]
-=== BuildSpec
-
-*Appears on:*
-
-* <<#_camel_apache_org_v1_Build, Build>>
-
-BuildSpec defines the Build operation to be executed
-
-[cols="2,2a",options="header"]
-|===
-|Field
-|Description
-
-|`tasks` +
-*xref:#_camel_apache_org_v1_Task[[\]Task]*
-|
-
-
-The sequence of Build tasks to be performed as part of the Build execution.
-
-|`strategy` +
-*xref:#_camel_apache_org_v1_BuildStrategy[BuildStrategy]*
-|
-
-
-The strategy that should be used to perform the Build.
-
-|`toolImage` +
-string
-|
-
-
-The container image to be used to run the build.
-
-|`operatorNamespace` +
-string
-|
-
-
-The namespace where to run the builder Pod (must be the same of the operator in charge of this Build reconciliation).
-
-|`timeout` +
-*https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#duration-v1-meta[Kubernetes meta/v1.Duration]*
-|
-
-
-Timeout defines the Build maximum execution duration.
-The Build deadline is set to the Build start time plus the Timeout duration.
-If the Build deadline is exceeded, the Build context is canceled,
-and its phase set to BuildPhaseFailed.
-
-
-|===
-
 [#_camel_apache_org_v1_BuildStatus]
 === BuildStatus
 
@@ -557,8 +502,8 @@ https://github.com/OAI/OpenAPI-Specification/issues/845
 
 *Appears on:*
 
-* <<#_camel_apache_org_v1_BuildSpec, BuildSpec>>
-* <<#_camel_apache_org_v1_IntegrationPlatformBuildSpec, IntegrationPlatformBuildSpec>>
+* <<#_camel_apache_org_v1_IntegrationPlatformPipelineSpec, IntegrationPlatformPipelineSpec>>
+* <<#_camel_apache_org_v1_PipelineSpec, PipelineSpec>>
 
 BuildStrategy specifies how the Build should be executed.
 It will trigger a Maven process that will take care of producing the expected Camel/Camel-Quarkus runtime.
@@ -1813,93 +1758,10 @@ IntegrationPhase --
 
 *Appears on:*
 
-* <<#_camel_apache_org_v1_IntegrationPlatformBuildSpec, IntegrationPlatformBuildSpec>>
+* <<#_camel_apache_org_v1_IntegrationPlatformPipelineSpec, IntegrationPlatformPipelineSpec>>
 
 IntegrationPlatformBuildPublishStrategy defines the strategy used to package and publish an Integration base image
 
-
-[#_camel_apache_org_v1_IntegrationPlatformBuildSpec]
-=== IntegrationPlatformBuildSpec
-
-*Appears on:*
-
-* <<#_camel_apache_org_v1_IntegrationPlatformSpec, IntegrationPlatformSpec>>
-
-IntegrationPlatformBuildSpec contains platform related build information.
-This configuration can be used to tune the behavior of the Integration/IntegrationKit image builds.
-You can define the build strategy, the image registry to use and the Maven configuration to adopt.
-
-[cols="2,2a",options="header"]
-|===
-|Field
-|Description
-
-|`buildStrategy` +
-*xref:#_camel_apache_org_v1_BuildStrategy[BuildStrategy]*
-|
-
-
-the strategy to adopt for building an Integration base image
-
-|`publishStrategy` +
-*xref:#_camel_apache_org_v1_IntegrationPlatformBuildPublishStrategy[IntegrationPlatformBuildPublishStrategy]*
-|
-
-
-the strategy to adopt for publishing an Integration base image
-
-|`runtimeVersion` +
-string
-|
-
-
-the Camel K Runtime dependency version
-
-|`runtimeProvider` +
-*xref:#_camel_apache_org_v1_RuntimeProvider[RuntimeProvider]*
-|
-
-
-the runtime used. Likely Camel Quarkus (we used to have main runtime which has been discontinued since version 1.5)
-
-|`baseImage` +
-string
-|
-
-
-a base image that can be used as base layer for all images.
-It can be useful if you want to provide some custom base image with further utility softwares
-
-|`registry` +
-*xref:#_camel_apache_org_v1_RegistrySpec[RegistrySpec]*
-|
-
-
-the image registry used to push/pull Integration images
-
-|`timeout` +
-*https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#duration-v1-meta[Kubernetes meta/v1.Duration]*
-|
-
-
-how much time to wait before time out the build process
-
-|`maven` +
-*xref:#_camel_apache_org_v1_MavenSpec[MavenSpec]*
-|
-
-
-Maven configuration used to build the Camel/Camel-Quarkus applications
-
-|`PublishStrategyOptions` +
-map[string]string
-|
-
-
-Generic options that can used by each publish strategy
-
-
-|===
 
 [#_camel_apache_org_v1_IntegrationPlatformCluster]
 === IntegrationPlatformCluster(`string` alias)
@@ -2038,6 +1900,89 @@ remote repository used to retrieve Kamelet catalog
 IntegrationPlatformPhase is the phase of an IntegrationPlatform
 
 
+[#_camel_apache_org_v1_IntegrationPlatformPipelineSpec]
+=== IntegrationPlatformPipelineSpec
+
+*Appears on:*
+
+* <<#_camel_apache_org_v1_IntegrationPlatformSpec, IntegrationPlatformSpec>>
+
+IntegrationPlatformPipelineSpec contains platform related build information.
+This configuration can be used to tune the behavior of the Integration/IntegrationKit image builds.
+You can define the build strategy, the image registry to use and the Maven configuration to adopt.
+
+[cols="2,2a",options="header"]
+|===
+|Field
+|Description
+
+|`buildStrategy` +
+*xref:#_camel_apache_org_v1_BuildStrategy[BuildStrategy]*
+|
+
+
+the strategy to adopt for building an Integration base image
+
+|`publishStrategy` +
+*xref:#_camel_apache_org_v1_IntegrationPlatformBuildPublishStrategy[IntegrationPlatformBuildPublishStrategy]*
+|
+
+
+the strategy to adopt for publishing an Integration base image
+
+|`runtimeVersion` +
+string
+|
+
+
+the Camel K Runtime dependency version
+
+|`runtimeProvider` +
+*xref:#_camel_apache_org_v1_RuntimeProvider[RuntimeProvider]*
+|
+
+
+the runtime used. Likely Camel Quarkus (we used to have main runtime which has been discontinued since version 1.5)
+
+|`baseImage` +
+string
+|
+
+
+a base image that can be used as base layer for all images.
+It can be useful if you want to provide some custom base image with further utility softwares
+
+|`registry` +
+*xref:#_camel_apache_org_v1_RegistrySpec[RegistrySpec]*
+|
+
+
+the image registry used to push/pull Integration images
+
+|`timeout` +
+*https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#duration-v1-meta[Kubernetes meta/v1.Duration]*
+|
+
+
+how much time to wait before time out the build process
+
+|`maven` +
+*xref:#_camel_apache_org_v1_MavenSpec[MavenSpec]*
+|
+
+
+Maven configuration used to build the Camel/Camel-Quarkus applications
+
+|`PublishStrategyOptions` +
+map[string]string
+|
+
+
+Generic options that can used by each publish strategy
+
+
+|===
+
 [#_camel_apache_org_v1_IntegrationPlatformSpec]
 === IntegrationPlatformSpec
 
@@ -2068,8 +2013,8 @@ what kind of cluster you're running (ie, plain Kubernetes or OpenShift)
 the profile you wish to use. It will apply certain traits which are required by the specific profile chosen.
 It usually relates the Cluster with the optional definition of special profiles (ie, Knative)
 
-|`build` +
-*xref:#_camel_apache_org_v1_IntegrationPlatformBuildSpec[IntegrationPlatformBuildSpec]*
+|`pipeline` +
+*xref:#_camel_apache_org_v1_IntegrationPlatformPipelineSpec[IntegrationPlatformPipelineSpec]*
 |
 
 
@@ -2584,7 +2529,7 @@ Servers (auth)
 
 *Appears on:*
 
-* <<#_camel_apache_org_v1_IntegrationPlatformBuildSpec, IntegrationPlatformBuildSpec>>
+* <<#_camel_apache_org_v1_IntegrationPlatformPipelineSpec, IntegrationPlatformPipelineSpec>>
 * <<#_camel_apache_org_v1_MavenBuildSpec, MavenBuildSpec>>
 
 MavenSpec --
@@ -2652,6 +2597,61 @@ See https://maven.apache.org/guides/mini/guide-using-extensions.html.
 The CLI options that are appended to the list of arguments for Maven commands,
 e.g., `-V,--no-transfer-progress,-Dstyle.color=never`.
 See https://maven.apache.org/ref/3.8.4/maven-embedder/cli.html.
+
+
+|===
+
+[#_camel_apache_org_v1_PipelineSpec]
+=== PipelineSpec
+
+*Appears on:*
+
+* <<#_camel_apache_org_v1_Build, Build>>
+
+PipelineSpec defines the Pipeline operation to be executed
+
+[cols="2,2a",options="header"]
+|===
+|Field
+|Description
+
+|`tasks` +
+*xref:#_camel_apache_org_v1_Task[[\]Task]*
+|
+
+
+The sequence of Pipeline tasks to be performed as part of the Pipeline execution.
+
+|`strategy` +
+*xref:#_camel_apache_org_v1_BuildStrategy[BuildStrategy]*
+|
+
+
+The strategy that should be used to perform the Build.
+
+|`toolImage` +
+string
+|
+
+
+The container image to be used to run the build.
+
+|`operatorNamespace` +
+string
+|
+
+
+The namespace where to run the builder Pod (must be the same of the operator in charge of this Build reconciliation).
+
+|`timeout` +
+*https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#duration-v1-meta[Kubernetes meta/v1.Duration]*
+|
+
+
+Timeout defines the Build maximum execution duration.
+The Build deadline is set to the Build start time plus the Timeout duration.
+If the Build deadline is exceeded, the Build context is canceled,
+and its phase set to BuildPhaseFailed.
 
 
 |===
@@ -2896,7 +2896,7 @@ be used to delay JSON decoding or precompute a JSON encoding.
 
 *Appears on:*
 
-* <<#_camel_apache_org_v1_IntegrationPlatformBuildSpec, IntegrationPlatformBuildSpec>>
+* <<#_camel_apache_org_v1_IntegrationPlatformPipelineSpec, IntegrationPlatformPipelineSpec>>
 * <<#_camel_apache_org_v1_PublishTask, PublishTask>>
 
 RegistrySpec provides the configuration for the container registry
@@ -3094,7 +3094,7 @@ ResourceType defines a kind of resource
 *Appears on:*
 
 * <<#_camel_apache_org_v1_IntegrationKitStatus, IntegrationKitStatus>>
-* <<#_camel_apache_org_v1_IntegrationPlatformBuildSpec, IntegrationPlatformBuildSpec>>
+* <<#_camel_apache_org_v1_IntegrationPlatformPipelineSpec, IntegrationPlatformPipelineSpec>>
 * <<#_camel_apache_org_v1_IntegrationStatus, IntegrationStatus>>
 * <<#_camel_apache_org_v1_RuntimeSpec, RuntimeSpec>>
 
@@ -3388,7 +3388,7 @@ string
 
 *Appears on:*
 
-* <<#_camel_apache_org_v1_BuildSpec, BuildSpec>>
+* <<#_camel_apache_org_v1_PipelineSpec, PipelineSpec>>
 
 Task represents the abstract task. Only one of the task should be configured to represent the specific task chosen.
 

@@ -46,8 +46,6 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &camelv1.BuildConditionApplyConfiguration{}
 	case v1.SchemeGroupVersion.WithKind("BuilderTask"):
 		return &camelv1.BuilderTaskApplyConfiguration{}
-	case v1.SchemeGroupVersion.WithKind("BuildSpec"):
-		return &camelv1.BuildSpecApplyConfiguration{}
 	case v1.SchemeGroupVersion.WithKind("BuildStatus"):
 		return &camelv1.BuildStatusApplyConfiguration{}
 	case v1.SchemeGroupVersion.WithKind("CamelArtifact"):
@@ -100,14 +98,14 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &camelv1.IntegrationKitTraitsApplyConfiguration{}
 	case v1.SchemeGroupVersion.WithKind("IntegrationPlatform"):
 		return &camelv1.IntegrationPlatformApplyConfiguration{}
-	case v1.SchemeGroupVersion.WithKind("IntegrationPlatformBuildSpec"):
-		return &camelv1.IntegrationPlatformBuildSpecApplyConfiguration{}
 	case v1.SchemeGroupVersion.WithKind("IntegrationPlatformCondition"):
 		return &camelv1.IntegrationPlatformConditionApplyConfiguration{}
 	case v1.SchemeGroupVersion.WithKind("IntegrationPlatformKameletRepositorySpec"):
 		return &camelv1.IntegrationPlatformKameletRepositorySpecApplyConfiguration{}
 	case v1.SchemeGroupVersion.WithKind("IntegrationPlatformKameletSpec"):
 		return &camelv1.IntegrationPlatformKameletSpecApplyConfiguration{}
+	case v1.SchemeGroupVersion.WithKind("IntegrationPlatformPipelineSpec"):
+		return &camelv1.IntegrationPlatformPipelineSpecApplyConfiguration{}
 	case v1.SchemeGroupVersion.WithKind("IntegrationPlatformSpec"):
 		return &camelv1.IntegrationPlatformSpecApplyConfiguration{}
 	case v1.SchemeGroupVersion.WithKind("IntegrationPlatformStatus"):
@@ -126,6 +124,8 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		return &camelv1.MavenBuildSpecApplyConfiguration{}
 	case v1.SchemeGroupVersion.WithKind("MavenSpec"):
 		return &camelv1.MavenSpecApplyConfiguration{}
+	case v1.SchemeGroupVersion.WithKind("PipelineSpec"):
+		return &camelv1.PipelineSpecApplyConfiguration{}
 	case v1.SchemeGroupVersion.WithKind("PodCondition"):
 		return &camelv1.PodConditionApplyConfiguration{}
 	case v1.SchemeGroupVersion.WithKind("PodSpec"):

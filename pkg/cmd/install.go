@@ -477,21 +477,21 @@ func (o *installCmdOptions) setupIntegrationPlatform(
 	}
 
 	if registrySecretName != "" {
-		platform.Spec.Build.Registry.Secret = registrySecretName
+		platform.Spec.Pipeline.Registry.Secret = registrySecretName
 	}
 
 	if len(o.MavenProperties) > 0 {
-		platform.Spec.Build.Maven.Properties = make(map[string]string)
+		platform.Spec.Pipeline.Maven.Properties = make(map[string]string)
 		for _, property := range o.MavenProperties {
 			kv := strings.Split(property, "=")
 			if len(kv) == 2 {
-				platform.Spec.Build.Maven.Properties[kv[0]] = kv[1]
+				platform.Spec.Pipeline.Maven.Properties[kv[0]] = kv[1]
 			}
 		}
 	}
 
 	if size := len(o.MavenExtensions); size > 0 {
-		platform.Spec.Build.Maven.Extension = make([]v1.MavenArtifact, 0, size)
+		platform.Spec.Pipeline.Maven.Extension = make([]v1.MavenArtifact, 0, size)
 		for _, extension := range o.MavenExtensions {
 			gav := strings.Split(extension, ":")
 			if len(gav) != 2 && len(gav) != 3 {
@@ -505,29 +505,29 @@ func (o *installCmdOptions) setupIntegrationPlatform(
 			if len(gav) == 3 {
 				ext.Version = gav[2]
 			}
-			platform.Spec.Build.Maven.Extension = append(platform.Spec.Build.Maven.Extension, ext)
+			platform.Spec.Pipeline.Maven.Extension = append(platform.Spec.Pipeline.Maven.Extension, ext)
 		}
 	}
 
 	if o.MavenLocalRepository != "" {
-		platform.Spec.Build.Maven.LocalRepository = o.MavenLocalRepository
+		platform.Spec.Pipeline.Maven.LocalRepository = o.MavenLocalRepository
 	}
 
 	if len(o.MavenCLIOptions) > 0 {
-		platform.Spec.Build.Maven.CLIOptions = o.MavenCLIOptions
+		platform.Spec.Pipeline.Maven.CLIOptions = o.MavenCLIOptions
 	}
 
 	if o.RuntimeVersion != "" {
-		platform.Spec.Build.RuntimeVersion = o.RuntimeVersion
+		platform.Spec.Pipeline.RuntimeVersion = o.RuntimeVersion
 	}
 	if o.BaseImage != "" {
-		platform.Spec.Build.BaseImage = o.BaseImage
+		platform.Spec.Pipeline.BaseImage = o.BaseImage
 	}
 	if o.BuildStrategy != "" {
-		platform.Spec.Build.BuildStrategy = v1.BuildStrategy(o.BuildStrategy)
+		platform.Spec.Pipeline.BuildStrategy = v1.BuildStrategy(o.BuildStrategy)
 	}
 	if o.BuildPublishStrategy != "" {
-		platform.Spec.Build.PublishStrategy = v1.IntegrationPlatformBuildPublishStrategy(o.BuildPublishStrategy)
+		platform.Spec.Pipeline.PublishStrategy = v1.IntegrationPlatformBuildPublishStrategy(o.BuildPublishStrategy)
 	}
 	if o.BuildTimeout != "" {
 		d, err := time.ParseDuration(o.BuildTimeout)
@@ -535,7 +535,7 @@ func (o *installCmdOptions) setupIntegrationPlatform(
 			return nil, err
 		}
 
-		platform.Spec.Build.Timeout = &metav1.Duration{
+		platform.Spec.Pipeline.Timeout = &metav1.Duration{
 			Duration: d,
 		}
 	}
@@ -552,7 +552,7 @@ func (o *installCmdOptions) setupIntegrationPlatform(
 		if err != nil {
 			return nil, err
 		}
-		platform.Spec.Build.Maven.Settings.ConfigMapKeyRef = &corev1.ConfigMapKeySelector{
+		platform.Spec.Pipeline.Maven.Settings.ConfigMapKeyRef = &corev1.ConfigMapKeySelector{
 			LocalObjectReference: corev1.LocalObjectReference{
 				Name: platform.Name + "-maven-settings",
 			},
@@ -565,7 +565,7 @@ func (o *installCmdOptions) setupIntegrationPlatform(
 		if err != nil {
 			return nil, err
 		}
-		platform.Spec.Build.Maven.Settings = mavenSettings
+		platform.Spec.Pipeline.Maven.Settings = mavenSettings
 	}
 
 	if o.MavenCASecret != "" {
@@ -573,7 +573,7 @@ func (o *installCmdOptions) setupIntegrationPlatform(
 		if err != nil {
 			return nil, err
 		}
-		platform.Spec.Build.Maven.CASecrets = append(platform.Spec.Build.Maven.CASecrets, *secret)
+		platform.Spec.Pipeline.Maven.CASecrets = append(platform.Spec.Pipeline.Maven.CASecrets, *secret)
 	}
 
 	if o.ClusterType != "" {
@@ -583,12 +583,12 @@ func (o *installCmdOptions) setupIntegrationPlatform(
 			}
 		}
 	}
-	if platform.Spec.Build.PublishStrategy == v1.IntegrationPlatformBuildPublishStrategyKaniko && cmd.Flags().Lookup("kaniko-build-cache").Changed {
+	if platform.Spec.Pipeline.PublishStrategy == v1.IntegrationPlatformBuildPublishStrategyKaniko && cmd.Flags().Lookup("kaniko-build-cache").Changed {
 		fmt.Fprintln(cmd.OutOrStdout(), "Warn: the flag --kaniko-build-cache is deprecated, use --build-publish-strategy-option KanikoBuildCacheEnabled=true instead")
-		platform.Spec.Build.AddOption(builder.KanikoBuildCacheEnabled, strconv.FormatBool(o.KanikoBuildCache))
+		platform.Spec.Pipeline.AddOption(builder.KanikoBuildCacheEnabled, strconv.FormatBool(o.KanikoBuildCache))
 	}
 	if len(o.BuildPublishStrategyOptions) > 0 {
-		if err = o.addBuildPublishStrategyOptions(&platform.Spec.Build); err != nil {
+		if err = o.addBuildPublishStrategyOptions(&platform.Spec.Pipeline); err != nil {
 			return nil, err
 		}
 	}
@@ -778,8 +778,8 @@ func (o *installCmdOptions) validate(_ *cobra.Command, _ []string) error {
 	return result
 }
 
-// addBuildPublishStrategyOptions parses and adds all the build publish strategy options to the given IntegrationPlatformBuildSpec.
-func (o *installCmdOptions) addBuildPublishStrategyOptions(build *v1.IntegrationPlatformBuildSpec) error {
+// addBuildPublishStrategyOptions parses and adds all the build publish strategy options to the given IntegrationPlatformPipelineSpec.
+func (o *installCmdOptions) addBuildPublishStrategyOptions(build *v1.IntegrationPlatformPipelineSpec) error {
 	for _, option := range o.BuildPublishStrategyOptions {
 		kv := strings.Split(option, "=")
 		if len(kv) == 2 {

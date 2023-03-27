@@ -149,9 +149,9 @@ func operatorInfo(ctx context.Context, c client.Client, namespace string) (map[s
 	// Useful information
 	infos["name"] = platform.Name
 	infos["version"] = platform.Status.Version
-	infos["publishStrategy"] = string(platform.Status.Build.PublishStrategy)
-	infos["runtimeVersion"] = platform.Status.Build.RuntimeVersion
-	infos["registryAddress"] = platform.Status.Build.Registry.Address
+	infos["publishStrategy"] = string(platform.Status.Pipeline.PublishStrategy)
+	infos["runtimeVersion"] = platform.Status.Pipeline.RuntimeVersion
+	infos["registryAddress"] = platform.Status.Pipeline.Registry.Address
 
 	if platform.Status.Info != nil {
 		for k, v := range platform.Status.Info {
